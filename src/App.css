@@ -24,6 +24,11 @@
   justify-content: center; */
   font-size: calc(10px + 2vmin);
   color: white;
+  padding: 20px;
+}
+.App-header h2{
+ border: 2px dashed #ccc; 
+ color: #ccc; 
 }
 
 .App-link {
@@ -37,4 +42,9 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+
+.add-btn-style{
+  margin: 0px 20px;
 }
