@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Button, Modal, Input, Form } from 'antd';
-import { PlusOutlined } from "@ant-design/icons"
+import { PlusOutlined } from "@ant-design/icons";
+
 interface Props {
     getTodo: (todoName: string) => void,
     item?: {
@@ -11,6 +12,8 @@ interface Props {
 export const AddTodo: React.FC<Props> = ({ getTodo, item }) => {
     const [isModalVisible, setModalVisible] = useState(false)
     const [todoName, setTodoName] = useState("")
+
+  
 
     useEffect(() => {
         item?.name && setTodoName(item.name)

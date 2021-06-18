@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
 import { TodoList } from './todoList';
 import { AddTodo } from './addTodo';
-import { stat } from 'fs';
-
+import { useDispatch, useSelector } from 'react-redux'
+import { bindActionCreators } from 'redux';
+import { actions } from './../../store'
 interface TodoObj {
     name: string,
     id: number
@@ -10,8 +11,13 @@ interface TodoObj {
 const TodoContainer: React.FC = () => {
     const [state, setstate] = useState<TodoObj[]>([])
     const [edititem, setedititem] = useState<TodoObj>()
+
+    const todoList = useSelector((state: any) => state.todo.todoList)
+    const dispatch = useDispatch();
+    const { addtodoAction, deletetodoAction } = bindActionCreators(actions, dispatch)
+
     const removeTodo = (id: number) => {
-        setstate(state.filter(item => item.id !== id))
+        deletetodoAction(id)
     }
     const editTodo = (item: {
         name: string,
@@ -37,14 +43,17 @@ const TodoContainer: React.FC = () => {
     }
     return (
         <div style={{ display: "flex", justifyContent: "center" }}>
-            <TodoList item={state} removeTodo={removeTodo} editTodo={editTodo} />
+            <TodoList item={todoList} removeTodo={removeTodo} editTodo={editTodo} />
             <AddTodo
                 item={edititem}
                 getTodo={(e) => {
                     edititem?.name ?
                         onEditTodo(e)
                         :
-                        setstate([...state, { id: state.length + 1, name: e }])
+                        addtodoAction({
+                            name: e, id: (new Date()).getTime(),
+                        })
+
                 }}
 
             />
